@@ -115,7 +115,7 @@ namespace Book_shop.MyPattern
         {
             using (NpgsqlConnection connection = new NpgsqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
-                string query = "update books set title=@Title, genre=@Genre, author=@Author, price=@Price";
+                string query = $"update books set title=@Title, genre=@Genre, author=@Author, price=@Price where id = {id}";
                 BookDTO parametrs = new BookDTO
                 {
                     Title = new_book.Title,
