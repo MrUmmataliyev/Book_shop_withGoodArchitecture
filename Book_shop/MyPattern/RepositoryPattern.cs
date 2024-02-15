@@ -1,5 +1,6 @@
 ﻿using Book_shop.Entities.DTOes;
 using Book_shop.Models;
+using Dapper;
 using Npgsql;
 
 namespace Book_shop.MyPattern
@@ -17,22 +18,49 @@ namespace Book_shop.MyPattern
         {
             try
             {
-                using(NpgsqlConnection  connection = new NpgsqlConnection())
+                using (NpgsqlConnection connection = new NpgsqlConnection(_configuration.GetConnectionString("DefaultConnection")))
                 {
+                    string query = "insert into books(title, genre, author, price) values (@Title, @Genre, @Author, @Price)";
+                    BookDTO parametrs = new BookDTO
+                    {
+                        Title = book.Title,
+                        Genre = book.Genre,
+                        Author = book.Author,
+                    
+                        Price = book.Price
+                    };
+                   var status = connection.Execute(query, parametrs);
 
+                    return $"Entered data = {status}";
                 }
-                return "ok";
             }
-            catch 
+            catch (Exception ex)
             {
-
-                return "ok";
+                return ex.Message;
             }
+
+               
+           
         }
 
         public string Delete(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (NpgsqlConnection connection = new NpgsqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                {
+                    string query = "delete from books where id = @id";
+
+
+                    var status = connection.Execute(query, new {id=id});
+
+                    return $"Deleted data = {status}";
+                }
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
         public IEnumerable<Book> GetAllBooks()

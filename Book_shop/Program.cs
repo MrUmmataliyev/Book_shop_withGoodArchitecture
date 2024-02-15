@@ -1,4 +1,6 @@
 
+using Book_shop.MyPattern;
+
 namespace Book_shop
 {
     public class Program
@@ -13,6 +15,7 @@ namespace Book_shop
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddScoped<IRepositoryPattern, RepositoryPattern>();
 
             var app = builder.Build();
 
