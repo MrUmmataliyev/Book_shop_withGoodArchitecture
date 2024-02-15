@@ -9,7 +9,9 @@ namespace Book_shop.MyPattern
         public IEnumerable<Book> GetAllBooks();
         public IEnumerable<Book> GetByAuthor(string author);
         public IEnumerable<Book> GetByTitle(string title);
-        public IEnumerable<Book> GetByPublishedYear(string title);
+        public IEnumerable<Book> GetByGenre(string genre);
+        public IEnumerable<Book> GetById(int id);
+      
         public string Update(int id, BookDTO new_book);
         public string Delete(int id);
 

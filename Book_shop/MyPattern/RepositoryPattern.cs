@@ -65,27 +65,69 @@ namespace Book_shop.MyPattern
 
         public IEnumerable<Book> GetAllBooks()
         {
-            throw new NotImplementedException();
+            using (NpgsqlConnection connection = new NpgsqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                string query = "select * from books";
+                return connection.Query<Book>(query);
+            }
         }
+
+
+
 
         public IEnumerable<Book> GetByAuthor(string author)
         {
-            throw new NotImplementedException();
+            using (NpgsqlConnection connection = new NpgsqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                string query = "select * from books where author=@author";
+                return connection.Query<Book>(query, new {author=author});
+            }
         }
 
-        public IEnumerable<Book> GetByPublishedYear(string title)
+        public IEnumerable<Book> GetByGenre(string genre)
         {
-            throw new NotImplementedException();
+            using (NpgsqlConnection connection = new NpgsqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                string query = "select * from books where genre=@genre";
+                return connection.Query<Book>(query, new { genre=genre });
+            }
+        }
+
+        public IEnumerable<Book> GetById(int id)
+        {
+            using (NpgsqlConnection connection = new NpgsqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                string query = "select * from books where id=@id";
+                return connection.Query<Book>(query, new { id = id });
+            }
         }
 
         public IEnumerable<Book> GetByTitle(string title)
         {
-            throw new NotImplementedException();
+            using (NpgsqlConnection connection = new NpgsqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                string query = "select * from books where title=@title";
+                return connection.Query<Book>(query, new { title = title });
+            }
         }
 
         public string Update(int id, BookDTO new_book)
         {
-            throw new NotImplementedException();
+            using (NpgsqlConnection connection = new NpgsqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                string query = "update books set title=@Title, genre=@Genre, author=@Author, price=@Price";
+                BookDTO parametrs = new BookDTO
+                {
+                    Title = new_book.Title,
+                    Genre = new_book.Genre,
+                    Author = new_book.Author,
+
+                    Price = new_book.Price
+                };
+                var status = connection.Execute(query, parametrs);
+
+                return $"Entered data = {status}";
+            }
         }
     }
 }
