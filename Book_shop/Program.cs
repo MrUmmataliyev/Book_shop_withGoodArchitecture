@@ -1,5 +1,6 @@
 
 using Book_shop.MyPattern;
+using Book_shop.Servises.BookServis;
 
 namespace Book_shop
 {
@@ -16,6 +17,7 @@ namespace Book_shop
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<IRepositoryPattern, RepositoryPattern>();
+            builder.Services.AddScoped<IBookServis, BookServis>();
 
             var app = builder.Build();
 
