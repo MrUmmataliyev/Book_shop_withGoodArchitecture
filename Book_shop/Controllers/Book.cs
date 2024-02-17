@@ -9,7 +9,7 @@ namespace Book_shop.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class Book : ControllerBase
+    public class Book : Controller
     {
 
         private readonly IBookServis _bookServis;
