@@ -1,6 +1,7 @@
 ﻿using Book_shop.Entities.DTOes;
 using Book_shop.Models;
 using Book_shop.MyPattern;
+using Book_shop.Servises.BookServis;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,60 +11,59 @@ namespace Book_shop.Controllers
     [ApiController]
     public class Book : ControllerBase
     {
-        private readonly IRepositoryPattern _bookPattern;
+
+        private readonly IBookServis _bookServis;
 
 
-        public Book(IRepositoryPattern bookRepositoryPattern)
+        public Book( IBookServis bookServis)
         {
-            _bookPattern = bookRepositoryPattern;
+       
+            _bookServis = bookServis;
         }
         [HttpPost]
         public string AddBook(BookDTO book) 
         { 
-            return _bookPattern.Create(book);
+            return _bookServis.Create(book);
         }
 
         [HttpGet]
         public IActionResult GetBookAllBooks()
         {
             
-            return Ok(_bookPattern.GetAllBooks()); 
+            return Ok(_bookServis.GetAllBooks()); 
         }
         [HttpGet]
         public IActionResult GetById(int id)
         {
-            var res = _bookPattern.GetById(id);
-            return Ok(res);
+           
+            return Ok(_bookServis.GetById(id));
         }
         [HttpGet]
         public IActionResult GetByTitle(string title)
         {
-            var res = _bookPattern.GetByTitle(title);
-            return Ok(res);
+          
+            return Ok(_bookServis.GetByTitle(title));
         }
         [HttpGet]
         public IActionResult GetByAuthor(string author)
         {
-            var res = _bookPattern.GetByAuthor(author);
-            return Ok(res);
+            return Ok(_bookServis.GetByAuthor(author));
         }
         [HttpGet]
         public IActionResult GetByGenre(string genre)
         {
-            var res = _bookPattern.GetByGenre(genre);
-            return Ok(res);
+            return Ok(_bookServis.GetByGenre(genre));
         }
         [HttpPut]
         public IActionResult Put(int id,BookDTO book) 
         {
-            var res = _bookPattern.Update(id,book);
-            return Ok(res); 
+            
+            return Ok(_bookServis.Update(id, book)); 
         }
         [HttpDelete]
         public IActionResult Delete(int id)
         {
-            var res = _bookPattern.Delete(id);
-            return Ok(res);
+            return Ok(_bookServis.Delete(id));
         }
     }
 }
